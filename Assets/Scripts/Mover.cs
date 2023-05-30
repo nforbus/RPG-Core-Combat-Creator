@@ -7,17 +7,31 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] Transform target; //SerializeField is a Unity function that allows for the serialization of 'private' fields, by default is is just public fields.
 
-    Ray lastRay;
+    //Ray lastRay;
 
     // Update is called once per frame
     void Update()
     {
         //GetMouseButtonDown detects button presses, and a value of 0 indicates the left mousebutton
         if(Input.GetMouseButtonDown(0)) {
-            lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            MoveToCursor();
         }
-        Debug.DrawRay(lastRay.origin, lastRay.direction * 100);
-
-        GetComponent<NavMeshAgent>().destination = target.position;
+        //Debug.DrawRay(lastRay.origin, lastRay.direction * 100);
     }
+
+    //Moves the player to the position indicated by the 
+    private void MoveToCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        bool hasHit = Physics.Raycast(ray, out hit);
+
+        if(hasHit)
+        {
+            GetComponent<NavMeshAgent>().destination = hit.point;
+        }
+    }
+
+    //lastRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //GetComponent<NavMeshAgent>().destination = target.position;
 }
