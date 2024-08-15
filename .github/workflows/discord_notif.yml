@@ -9,4 +9,4 @@ jobs:
         uses: jackall3n/discord-message@v1.7
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: "Hello, from Github"
+          message: "Hello, from Github."
