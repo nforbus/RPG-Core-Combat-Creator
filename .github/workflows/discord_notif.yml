@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Discord
-        if: success()
         uses: jackall3n/discord-message@v1.7
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
