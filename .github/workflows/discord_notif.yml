@@ -8,4 +8,4 @@ jobs:
         uses: discord-actions/message@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: ${{ github.event.head_commit.message }}
+          message: ${{ github.event.head_commit.message + github.event.commits[0].message}}
