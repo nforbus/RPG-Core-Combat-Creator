@@ -1,0 +1,11 @@
+name: Notify Discord
+on: [push]
+jobs:
+  Notify-Discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          message: ${{ github.event.head_commit.message }}
