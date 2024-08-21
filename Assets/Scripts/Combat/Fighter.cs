@@ -40,12 +40,19 @@ namespace RPG.Combat
 
         private void AttackBehavior()
         {
+            transform.LookAt(target.transform);
             if(timeSinceLastAttack >= timeBetweenAttacks)
             {
-                // This will trigger the Hit() event
-                GetComponent<Animator>().SetTrigger("attack");
-                timeSinceLastAttack = 0;
+                TriggerAttack();
             }
+        }
+
+        private void TriggerAttack()
+        {
+            // This will trigger the Hit() event
+            GetComponent<Animator>().ResetTrigger("stopAttack");
+            GetComponent<Animator>().SetTrigger("attack");
+            timeSinceLastAttack = 0;
         }
 
         //Animation event, public/private not needed
@@ -53,12 +60,24 @@ namespace RPG.Combat
         {
             //Health healthComponent = target.GetComponent<Health>();
             //healthComponent.TakeDamage(weaponDamage);
+            if(!target) { return; }
             target.TakeDamage(weaponDamage);
         }
 
         private bool GetIsInRange()
         {
             return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
+        }
+
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            if(!combatTarget) { return false; }
+
+            Health targetToCheck = combatTarget.GetComponent<Health>();
+            
+            //If target exists and is not dead, return true
+            return targetToCheck != null && !targetToCheck.IsDead();
+
         }
 
         public void Attack(CombatTarget combatTarget)
@@ -71,8 +90,14 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            StopAttack();
             target = null;
+        }
+
+        private void StopAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("attack");
+            GetComponent<Animator>().SetTrigger("stopAttack");
         }
     }
 }
