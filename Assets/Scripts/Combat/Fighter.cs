@@ -13,7 +13,7 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 5f;
 
         Health target;
-        float timeSinceLastAttack = 0;
+        float timeSinceLastAttack = Mathf.Infinity;
 
         private void Update()
         {
@@ -29,7 +29,6 @@ namespace RPG.Combat
             //If we have a target but its not close enough to attack
             if (!GetIsInRange())
             {
-                print("Info: " + target.transform.position);
                 GetComponent<Mover>().MoveTo(target.transform.position);
             }
             else //If we're close enough to attack the target
@@ -85,7 +84,7 @@ namespace RPG.Combat
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
-            print("I'm Attacking");
+            //print("I'm Attacking");
         }
 
 
