@@ -29,6 +29,7 @@ namespace RPG.Combat
             //If we have a target but its not close enough to attack
             if (!GetIsInRange())
             {
+                print("Info: " + target.transform.position);
                 GetComponent<Mover>().MoveTo(target.transform.position);
             }
             else //If we're close enough to attack the target
@@ -69,7 +70,7 @@ namespace RPG.Combat
             return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             if(!combatTarget) { return false; }
 
@@ -80,7 +81,7 @@ namespace RPG.Combat
 
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
