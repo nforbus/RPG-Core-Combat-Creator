@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RPG.Combat;
 using UnityEngine;
 using RPG.Core;
+using RPG.Control;
 
 namespace RPG.Control
 {
@@ -11,13 +12,19 @@ namespace RPG.Control
         [SerializeField] float chaseDistance = 5f;
         Fighter fighter;
         Health health;
+        Mover mover;
         GameObject player;
+
+        Vector3 guardPosition;
 
         private void Start()
         {
             fighter = GetComponent<Fighter>();
             player = GameObject.FindWithTag("Player");
             health = GetComponent<Health>();
+            mover = GetComponent<Mover>();
+
+            guardPosition = transform.position;
         }
 
         private void Update()
@@ -26,18 +33,11 @@ namespace RPG.Control
 
             if(InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
-                /*
-                if (gameObject.name == "Enemy") {
-                    //if you want to print only stuff for this enemy.
-                    //can also just use if(gameObject.tag == "Player")
-                }
-                */
-                //print(gameObject.name + " Should chase");
-
                 fighter.Attack(player);
             }
             else {
-                fighter.Cancel();
+                //fighter.Cancel();
+                mover.StartMoveAction(guardPosition);
             }
         }
 
