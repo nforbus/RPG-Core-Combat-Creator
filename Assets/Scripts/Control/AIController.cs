@@ -39,14 +39,13 @@ namespace RPG.Control
                 AttackBehavior();
             }
             else if(timeSinceLastSawPlayer < suspicionTime) {
-                //Suspicion State
                 SuspicionBehavior();
             }
             else {
                 GuardBehavior();
             }
 
-            timeSinceLastSawPlayer = += Time.deltaTime;
+            timeSinceLastSawPlayer += Time.deltaTime;
         }
 
         private void AttackBehavior() {
