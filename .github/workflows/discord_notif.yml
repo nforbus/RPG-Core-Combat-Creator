@@ -9,4 +9,5 @@ jobs:
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
           #message: ${{ github.event.head_commit.message}}, ${{ github.event.commits[0].message }}
-          run: git log -1 --pretty=%B
+          #run: git log -1 --pretty=%B
+          message: "testing"
